@@ -20,7 +20,22 @@ git push -uf origin main
 Python 3.10.5
 ```
 
-## 
+## Setting
+```
+## 버전 확인
+python3 --version
+pip3 install --upgrade pip
+pip install -r requirements.txt
+```
+
+## Run
+```
+{PYTHON_PATH}/python3 run.py
+ex) 
+/usr/local/bin/python3.10 /Users/aaa/source/git/webScraping/run.py 
+```
+
+
 
 
 
