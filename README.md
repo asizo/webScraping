@@ -26,6 +26,12 @@ Python 3.10.5
 python3 --version
 pip3 install --upgrade pip
 pip install -r requirements.txt
+
+## .env 파일 세팅 ( 파일 내역이 없는 경우, 담당자에게 요청 )
+touch .env
+
+## log 파일 생성 ( log 파일의 실행권한이 필요한 경우, chmod 777 적용 )
+touch run.log
 ```
 
 ## Run
