@@ -15,12 +15,17 @@ class Browser():
         :param isShowBrowser: 브라우저창을 띄어 처리 여부 ( True : 브라우저창을 띄움, False : headless 로 백단에서 처리 )
         :return:
         """
-        if bool(str2bool(isShowBrowser)) == True:
-            self.driver = webdriver.Chrome()
-        else:
-            options = webdriver.ChromeOptions()
-            options.add_argument("headless")
-            self.driver = webdriver.Chrome(options=options)
+        
+        options = webdriver.ChromeOptions()
+        #  --no-sandbox : 샌드박스 비활성화
+        # options.add_argument('--no-sandbox')
+        #  --disable-dev-shm-usage : 공유메모리 사용 비활성화
+        options.add_argument("--disable-dev-shm-usage")
+        if bool(str2bool(isShowBrowser)) == False:
+            # --headless 모드
+            options.add_argument('--headless')
+
+        self.driver = webdriver.Chrome(options=options)
 
     def getDriver(self):
         """
