@@ -21,6 +21,8 @@ class Browser():
         # options.add_argument('--no-sandbox')
         #  --disable-dev-shm-usage : 공유메모리 사용 비활성화
         options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--no-sandbox")
+
         if bool(str2bool(isShowBrowser)) == False:
             # --headless 모드
             options.add_argument('--headless')
