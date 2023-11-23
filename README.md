@@ -1,6 +1,5 @@
 # webScraping
 
-
 ## Name
 네이버웹 스크랩핑
 
@@ -22,7 +21,7 @@ Python 3.10.5+
 
 ## Setting
 ```
-## python 설치 ( Python 3.10.5+ 설치 )  
+## python 설치 ( Python 3.10.5+ 설치 )  ˚
 https://www.python.org/downloads/
  
 ## 버전 확인

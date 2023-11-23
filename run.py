@@ -19,7 +19,9 @@ loopCnt = 1
 # 이벤트 처리
 def main(loopCnt) -> any:
 
+    print('MAIN HANDLE START ( 실행 횟수 : {} )'.format(loopCnt))
     logger.write('info', 'MAIN HANDLE START ( 실행 횟수 : {} )'.format(loopCnt))
+    
     try:
 
         # 브라우저 인스턴스 생성
@@ -57,13 +59,16 @@ def main(loopCnt) -> any:
                         message = str(i) + " 페이지 조회 불가" + "\n" + str(e) + "\n" + str(traceback.format_exc())
                         logger.write('error', '[FAIL] {}'.format(message))
 
+            
+        driver.quit()  # 모든 브라우저 닫기
+
     except Exception as e:
         message = " Next Page Error" + "\n" + str(e) + "\n" + str(traceback.format_exc())
         logger.write('error', '[FAIL] {}'.format(message))
         pass
 
+    driver = None
     time.sleep(interval())
-    driver.quit()  # 모든 브라우저 닫기
     logger.write('info', 'MAIN HANDLE QUIT')
 
 
