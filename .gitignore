@@ -1,3 +1,4 @@
 .env
 /run.log*
 .idea
+/m_nail_run.bat
