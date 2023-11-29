@@ -50,8 +50,10 @@ def main(loopCnt) -> any:
                 except:
                     try:
                         # 조회하는 매장의 linkText 가 없는 경우, except 로 넘어와 다음 페이지를 클릭하여 다시 검색을 진행한다.
-                        logger.write('info', '다음 페이지 조회')
-                        driver.findElementCssSelector("a.spnew_bf.cmm_pg_next.on").click()
+                        logger.write('info', '다음 페이지 조회 1')
+                        # driver.findElementCssSelector("a.spnew_bf.cmm_pg_next.on").click()
+                        driver.findElementCssSelector("a.cmm_pg_next").click()
+
                         time.sleep(interval())
                         pass
                     except Exception as e:
@@ -59,7 +61,7 @@ def main(loopCnt) -> any:
                         message = str(i) + " 페이지 조회 불가" + "\n" + str(e) + "\n" + str(traceback.format_exc())
                         logger.write('error', '[FAIL] {}'.format(message))
 
-            
+
         driver.quit()  # 모든 브라우저 닫기
 
     except Exception as e:
