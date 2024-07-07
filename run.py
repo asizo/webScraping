@@ -19,7 +19,9 @@ loopCnt = 1
 # 이벤트 처리
 def main(loopCnt) -> any:
 
+    print('MAIN HANDLE START ( 실행 횟수 : {} )'.format(loopCnt))
     logger.write('info', 'MAIN HANDLE START ( 실행 횟수 : {} )'.format(loopCnt))
+    
     try:
 
         # 브라우저 인스턴스 생성
@@ -40,16 +42,25 @@ def main(loopCnt) -> any:
 
             for i in range(1, 1 + 5):
                 try:
+
                     # 검색하는 매장을 linkText 기준으로 조회한 후, 클릭 이벤트 진행
                     logger.write('info', '매장 엘리먼트 조회 :: {} 페이지'.format(str(i)))
-                    driver.findElementLinkText(os.environ.get('SEARCH_STORE')).click()
-                    logger.write('info', '매장 엘리먼트 클릭 완료 :: {} 페이지'.format(str(i)))
+                    # if i == 4 : 
+                    #     logger.write('info', driver.getPageSource())
+                    elementLink = driver.findElementLinkText(os.environ.get('SEARCH_STORE'))
+
+                    if elementLink : 
+                        driver.findElementLinkText(os.environ.get('SEARCH_STORE')).click()
+                        logger.write('info', '매장 엘리먼트 클릭 완료 :: {} 페이지'.format(str(i)))
+                        time.sleep(interval())
+                    
                     break
                 except:
                     try:
                         # 조회하는 매장의 linkText 가 없는 경우, except 로 넘어와 다음 페이지를 클릭하여 다시 검색을 진행한다.
                         logger.write('info', '다음 페이지 조회')
-                        driver.findElementCssSelector("a.spnew_bf.cmm_pg_next.on").click()
+                        # driver.findElementCssSelector("a.spnew_bf.cmm_pg_next.on").click()
+                        driver.findElementCssSelector("a.cmm_pg_next").click()
                         time.sleep(interval())
                         pass
                     except Exception as e:
@@ -57,13 +68,16 @@ def main(loopCnt) -> any:
                         message = str(i) + " 페이지 조회 불가" + "\n" + str(e) + "\n" + str(traceback.format_exc())
                         logger.write('error', '[FAIL] {}'.format(message))
 
+            
+        driver.quit()  # 모든 브라우저 닫기
+
     except Exception as e:
         message = " Next Page Error" + "\n" + str(e) + "\n" + str(traceback.format_exc())
         logger.write('error', '[FAIL] {}'.format(message))
         pass
 
+    driver = None
     time.sleep(interval())
-    driver.quit()  # 모든 브라우저 닫기
     logger.write('info', 'MAIN HANDLE QUIT')
 
 

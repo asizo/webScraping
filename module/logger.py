@@ -1,3 +1,5 @@
+import os
+from datetime import datetime
 import logging
 from logging.handlers import TimedRotatingFileHandler
 from logging import Formatter
@@ -13,12 +15,22 @@ class Logger():
     def __init__(self, fileName='run.log'):
 
         self.logger = logging.getLogger(__name__)
+
+
+        log_dir = './logs'
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)
+        
+        # Create the log file name with date format
+        fileName = os.path.join(log_dir, datetime.now().strftime('%Y-%m-%d') + '.log')
+        # fileName = os.path.join(log_dir, fileName)
+
         # create handler
         handler = TimedRotatingFileHandler(
             filename=fileName,
             when='D',
             interval=1,
-            backupCount=5,
+            backupCount=30,
             encoding='utf-8',
             delay=False)
         # create formatter and add to handler

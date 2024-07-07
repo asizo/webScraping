@@ -4,10 +4,14 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 class Browser():
+
     driver: webdriver = dict()
 
+    
     def __init__(self, isShowBrowser=False):
         """
         Browser 생성자
@@ -15,12 +19,20 @@ class Browser():
         :param isShowBrowser: 브라우저창을 띄어 처리 여부 ( True : 브라우저창을 띄움, False : headless 로 백단에서 처리 )
         :return:
         """
-        if bool(str2bool(isShowBrowser)) == True:
-            self.driver = webdriver.Chrome()
-        else:
-            options = webdriver.ChromeOptions()
-            options.add_argument("headless")
-            self.driver = webdriver.Chrome(options=options)
+
+        chromedriver_version = "114.0.5735.16"
+        options = webdriver.ChromeOptions()
+        options.add_argument('--no-sandbox')
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_experimental_option("excludeSwitches", ["enable-logging"])
+
+
+        if bool(str2bool(isShowBrowser)) == False:
+            print("headless mode")
+            options.add_argument('--headless') # 헤드레스
+            options.add_argument('--window-size=1890,1030') # 창 크기
+
+        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options) # 크롬드라이버 위치
 
     def getDriver(self):
         """
@@ -37,6 +49,13 @@ class Browser():
         """
         self.getDriver().get(domain)
 
+
+    def getPageSource(self):
+        """
+        html 소스를 받아온다.
+        """
+        return self.getDriver().page_source
+
     def findElementId(self, elementId):
         """
         html dom 에서 id 값을 조회하여 element 를 검색
@@ -51,10 +70,18 @@ class Browser():
         :param keyword:
         :return:
         """
-        return self.getDriver().find_element(
-            By.LINK_TEXT,
-            keyword
-        )
+        try:
+            element = self.getDriver().find_element(
+                By.LINK_TEXT,
+                keyword
+            )
+        except Exception as e:
+            element = self.getDriver().find_element(
+                By.PARTIAL_LINK_TEXT,
+                keyword
+            )
+
+        return element
 
     def findElementCssSelector(self, selector):
         """
