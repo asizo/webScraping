@@ -59,7 +59,9 @@ def main(loopCnt) -> any:
                     try:
                         # 조회하는 매장의 linkText 가 없는 경우, except 로 넘어와 다음 페이지를 클릭하여 다시 검색을 진행한다.
                         logger.write('info', '다음 페이지 조회')
-                        driver.findElementCssSelector("a.spnew_bf.cmm_pg_next.on").click()
+                        # driver.findElementCssSelector("a.spnew_bf.cmm_pg_next.on").click()
+                        driver.findElementCssSelector("a.cmm_pg_next").click()
+                        
                         time.sleep(interval())
                         pass
                     except Exception as e:
